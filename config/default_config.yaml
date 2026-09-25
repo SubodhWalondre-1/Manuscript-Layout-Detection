@@ -1,0 +1,155 @@
+model:
+  name: PP-DocLayoutV2
+  confidence_threshold: 0.15
+  device: auto
+  layout_nms: true
+
+performance:
+  enable_mkldnn: true
+  mkldnn_cache_capacity: 10
+  cpu_threads: 6
+  warmup: true
+  opencv_threads: 2
+  fast_mode: true
+
+text_detection:
+  model_name: PP-OCRv5_mobile_det
+  thresh: 0.3
+  box_thresh: 0.6
+  unclip_ratio: 2.0
+  max_side_len: 960
+
+preprocessing:
+  max_size: 1024
+  clahe_clip_limit: 2.0
+  clahe_grid_size: 8
+  deskew_max_angle: 15
+  denoise: false
+
+spatial_heuristics:
+  header_zone: 0.18
+  footer_zone: 0.82
+  side_margin: 0.15
+
+grid_decomposition:
+  enabled: true
+  min_container_coverage: 0.35
+  h_line_min_width_ratio: 0.20
+  v_line_min_height_ratio: 0.20
+  peak_threshold_ratio: 0.12
+  margin_boundary_discard_ratio: 0.05
+  min_gap_peaks: 25
+
+postprocessing:
+  nms_iou_threshold: 0.45
+  merge_iou_threshold: 0.65
+  min_area_ratio: 0.003
+  min_header_area_ratio: 0.0006
+  min_footer_area_ratio: 0.001
+  min_confidence: 0.10
+
+manuscript_detection:
+  # Minimum fraction of image area for the manuscript region
+  min_area_fraction: 0.10
+  # Padding around detected manuscript boundary (fraction of dimension)
+  boundary_padding: 0.01
+
+visualization:
+  colors:
+    header: [50, 100, 255]
+    footer: [255, 200, 50]
+    main_text: [100, 255, 100]
+    side_text: [50, 200, 255]
+    filler: [255, 100, 200]
+  line_thickness: 2
+  line_thickness_ratio: 0.0025
+  font_scale_ratio: 0.00045
+
+semantic_refinement:
+  enabled: true
+  filler_score_threshold: 0.45
+  isolation_gap_threshold: 10
+  latin_ratio_threshold: 0.35
+  min_latin_chars: 4
+  min_line_height: 4
+  max_single_line_height: 35
+  padding: 2
+  # Page-relative ownership uses robust line metrics rather than global box thresholds.
+  owned_region_padding_ratio: 0.15
+  body_flow_score_ratio: 0.40
+  minimum_body_flow_lines: 2
+  attribution_keywords:
+    - "public domain"
+    - "digitization"
+    - "digitized"
+    - "funding"
+    - "midf"
+    - "collection"
+    - "manuscript collection"
+    - "rare book"
+    - "rare book and manuscript"
+    - "library"
+    - "source"
+    - "copyright"
+    - "archive"
+    - "attribution"
+    - "cc-0"
+    - "cc0"
+    - "egangotri"
+    - "sringeri"
+    - "campus"
+    - "watermark"
+    - "all rights"
+    - "reserved"
+    - "scanned"
+    - "university"
+    - "institute"
+    - "curated"
+    - "folio"
+    - "press"
+    - "edition"
+    - "publication"
+    - "note"
+    - "annotat"
+    - "annotation"
+    - "society"
+    - "bengal"
+    - "benares"
+    - "acc"
+    - "date"
+    - "treatise"
+    - "century"
+    - "handwriting"
+    - "part of"
+    - "main text"
+    - "possible"
+    - "later"
+    - "fragment"
+    - "english"
+    - "consistent"
+    - "region"
+
+confidence_scoring:
+  weights:
+    layout: 0.25      # PP-DocLayoutV2 prior confidence
+    ocr_det: 0.25     # Fine-grained DBNet text detection confidence
+    ocr_rec: 0.20     # OCR character recognition confidence
+    geometry: 0.15    # Spatial ink density & aspect ratio regularity
+    semantic: 0.15    # Script consistency (Devanagari vs Latin per class)
+
+# Page-adaptive semantic ownership rules. Values are relative/relational; they are
+# intentionally not tied to any particular image size or manuscript collection.
+role_assignment:
+  side_width_ratio: 0.68
+  header_max_lines: 3
+  footer_max_lines: 3
+  role_gap_line_ratio: 1.20
+  body_width_min_ratio: 0.55
+  header_prefix_max_lines: 3
+  header_prefix_gap_ratio: 1.35
+  macro_header_overlap_ratio: 0.35
+  footer_max_height_ratio: 0.08
+  footer_max_body_overlap_ratio: 0.12
+  footer_min_gap_lines: 1.15
+  macro_body_fallback_min_height_ratio: 0.22
+  macro_body_fallback_min_ink_density: 0.015

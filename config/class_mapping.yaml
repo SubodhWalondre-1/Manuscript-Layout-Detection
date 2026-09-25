@@ -1,0 +1,58 @@
+# Class mapping from PP-DocLayoutV2 pretrained labels to assignment classes.
+#
+# PP-DocLayoutV2 official label taxonomy (25 labels):
+#   abstract, algorithm, aside_text, chart, content, display_formula, doc_title,
+#   figure_title, footer, footer_image, footnote, formula_number, header,
+#   header_image, image, inline_formula, number, paragraph_title, reference,
+#   reference_content, seal, table, text, vertical_text, vision_footnote.
+#
+# Target assignment classes: header, main_text, footer, side_text, filler.
+
+# Direct mappings: pretrained_label -> assignment_class
+direct_mappings:
+  header: header
+  footer: footer
+  text: main_text
+
+# Candidate mappings: labels validated using geometric and spatial context
+candidate_mappings:
+  # Title / header candidates
+  paragraph_title: header
+  doc_title: header
+  number: header
+
+  # Marginalia candidates
+  aside_text: side_text
+  reference: side_text
+  reference_content: side_text
+  footnote: side_text
+  vision_footnote: side_text
+
+  # Filler candidates
+  image: filler
+  header_image: filler
+  footer_image: filler
+  seal: filler
+  chart: filler
+  formula_number: filler
+  inline_formula: filler
+
+  # Main text candidates
+  table: main_text
+  vertical_text: main_text
+
+# Labels to always ignore (non-semantic or non-manuscript elements)
+ignore_labels:
+  - abstract
+  - algorithm
+  - display_formula
+  - figure_title
+  - content
+
+# Assignment target classes
+target_classes:
+  - header
+  - main_text
+  - footer
+  - side_text
+  - filler
