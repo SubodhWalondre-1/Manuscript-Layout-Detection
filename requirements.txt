@@ -1,0 +1,10 @@
+paddlepaddle
+paddleocr
+paddlex
+opencv-python
+numpy
+Pillow
+PyYAML
+tqdm
+scipy
+pytest
