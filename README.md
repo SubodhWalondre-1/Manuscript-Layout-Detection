@@ -173,25 +173,7 @@ manuscript-layout-detection/
 │   │   ├── image_4.png
 │   │   ├── image_5.png
 │   │   └── test_3.png
-│   └── output/                         # Reference verified outputs
-│       ├── annotated/                  # Color-coded visualizations
-│       │   ├── image_14_annotated.png
-│       │   ├── image_19_annotated.png
-│       │   ├── image_2_annotated.png
-│       │   ├── image_3_annotated.png
-│       │   ├── image_4_annotated.png
-│       │   ├── image_5_annotated.png
-│       │   ├── image_annotated.png
-│       │   └── test_3_annotated.png
-│       └── metadata/                   # Structured JSON metadata files
-│           ├── image_14_metadata.json
-│           ├── image_19_metadata.json
-│           ├── image_2_metadata.json
-│           ├── image_3_metadata.json
-│           ├── image_4_metadata.json
-│           ├── image_5_metadata.json
-│           ├── image_metadata.json
-│           └── test_3_metadata.json
+|
 ├── results/                            # Empty default CLI output directory (generated at runtime)
 │   ├── annotated/
 │   └── metadata/
